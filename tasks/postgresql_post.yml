@@ -1,6 +1,12 @@
 ---
+- name: Ensure PostgreSQL is start and running
+  ansible.builtin.systemd:
+    name: postgresql
+    state: started
+    enabled: true
+
 - name: Copy PostgreSQL configuration file
-  template:
+  ansible.builtin.template:
     src: "{{ postgresql_host_config_file_path }}"
     dest: "{{ postgresql_config_file_path }}"
     owner: root
@@ -11,14 +17,14 @@
 
 - name: Create database(s)
   become_user: postgres
-  postgresql_db:
+  community.postgresql.postgresql_db:
     name: "{{ item }}"
   with_items: "{{ postgresql_databases }}"
   when: postgresql_databases is defined
 
 - name: Create user(s)
   become_user: postgres
-  postgresql_user:
+  community.postgresql.postgresql_user:
     name: "{{ item.username }}"
     password: "{{ item.password }}"
     role_attr_flags: "{{ item.roles }}"
@@ -27,7 +33,7 @@
 
 - name: Assign user(s) privileges
   become_user: postgres
-  postgresql_privs:
+  community.postgresql.postgresql_privs:
     db: "{{ item.db }}"
     role: "{{ item.username }}"
     type: database

@@ -4,7 +4,7 @@
 
 ## Requirements
 
-None.
+ansible-galaxy collection install community.postgresql
 
 ## Role Variables
 

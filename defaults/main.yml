@@ -17,7 +17,7 @@ postgresql_config_file_path: "/etc/postgresql/{{ postgresql_version }}/main/post
 #   - username: user2
 #     password: pass2
 #     db: db2
-#     roles: [NO]SUPERUSER,LOGIN
+#     roles: "[NO]SUPERUSER,LOGIN"
 
 # Sample to create databases
 # postgresql_databases:
