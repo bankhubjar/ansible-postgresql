@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-postgresql"
+      include_role:
+        name: "ansible-postgresql"

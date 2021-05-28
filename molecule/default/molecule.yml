@@ -1,0 +1,63 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+    set -e
+    yamllint .
+    ansible-lint ../../tasks
+platforms:
+
+  # - name: rhel8
+  #   image: registry.access.redhat.com/ubi8/ubi
+  #   docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+  #   privileged: True
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   capabilities:
+  #     - SYS_ADMIN
+  #   command: '/lib/systemd/systemd'
+
+  # - name: rhel7
+  #   image: registry.access.redhat.com/ubi7/ubi
+  #   docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+  #   privileged: True
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   capabilities:
+  #     - SYS_ADMIN
+  #   command: '/lib/systemd/systemd'
+
+  - name: Focal
+    # image: geerlingguy/docker-ubuntu2004-ansible:latest
+    image: quay.io/ansible/ubuntu2004-test-container
+    # docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: '/lib/systemd/systemd'
+
+  # - name: centos7
+  #   image: geerlingguy/docker-centos7-ansible:python3
+  #   docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+  #   privileged: true
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   capabilities:
+  #     - SYS_ADMIN
+  #   command: '/lib/systemd/systemd'
+
+  # - name: centos8
+  #   image: geerlingguy/docker-centos8-ansible:latest
+  #   docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+  #   privileged: true
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   capabilities:
+  #     - SYS_ADMIN
+  #   command: '/lib/systemd/systemd'
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
